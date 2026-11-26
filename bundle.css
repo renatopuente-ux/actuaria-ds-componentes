@@ -1,0 +1,124 @@
+700;800;900&family=Prompt:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+/* ============================================================
+   Actuaria Design System — component stylesheet.
+   Loaded after tokens.css, which declares every token value.
+   Only what tokens.json cannot hold stays here: the brand
+   gradients, the glass blur and motion.
+   Assembled from tokens/fonts.css, tokens/colors.css,
+   tokens/layout.css, tokens/interface-styles.css and tokens/base.css.
+   ============================================================ */
+:root {
+  /* ── Degradados de marca ─────────────────────────────── */
+  --grad-navy: linear-gradient(160deg, var(--ac-navy) 0%, var(--ac-navy-900) 100%);
+  --grad-blue: linear-gradient(135deg, var(--ac-blue) 0%, var(--ac-navy) 100%);
+  --grad-tricolor: linear-gradient(120deg, var(--ac-navy) 0%, var(--ac-blue) 55%, var(--ac-orange) 100%);
+
+  /* ── Glassmorfismo ───────────────────────────────────── */
+  --glass-blur:   blur(16px);
+
+  /* ── Movimiento ──────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    120ms;
+  --dur-normal:  220ms;
+  --dur-slow:    360ms;
+}
+
+/* Utilidades — el estilo base de producto */
+.neu-surface { background: var(--neu-surface); }
+.neu-card    { background: var(--neu-surface); border: none; border-radius: var(--neu-radius); box-shadow: var(--neu-raised); }
+.neu-inset   { background: var(--neu-surface); border: none; border-radius: var(--neu-radius-sm); box-shadow: var(--neu-inset); }
+.neu-btn     { background: var(--neu-surface); border: none; border-radius: var(--neu-radius-sm); box-shadow: var(--neu-raised-sm); cursor: pointer; transition: box-shadow var(--dur-fast) var(--ease-out); }
+.neu-btn:active { box-shadow: var(--neu-inset-sm); }
+
+.glass-panel {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.bento-grid { display: grid; gap: var(--bento-gap); }
+
+/* ============================================================
+   Actuaria · Base / reset + element defaults
+   Brandbook §28: titles in the display face, subtitles in Nunito,
+   running content in Prompt.
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);   /* Prompt — contenido */
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--text-strong);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Titulares: Lemon Milk Pro. El corte Pro tiene minúsculas, así que
+   los titulares pueden ir en caja mixta; MAYÚSCULAS es opcional
+   (usa .ac-caps) y obligatorio solo en el wordmark. */
+h1, h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-md);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-tight);
+  color: var(--ac-navy);
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+
+/* Caja alta opcional para titulares y el wordmark */
+.ac-caps { text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Subtítulos y etiquetas: Nunito */
+h3, h4 {
+  margin: 0;
+  font-family: var(--font-heading);
+  color: var(--ac-navy);
+  line-height: var(--lh-snug);
+  text-wrap: balance;
+}
+h3 { font-size: var(--fs-h3); font-weight: var(--fw-extra); }
+h4 { font-size: var(--fs-h4); font-weight: var(--fw-bold); }
+
+p { margin: 0; text-wrap: pretty; }
+
+a { color: var(--ac-blue); text-decoration: none; }
+a:hover { color: var(--ac-blue-600); }
+
+/* Eyebrow / kicker — Nunito, recurring brand device */
+.ac-eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-extra);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--ac-blue);
+}
+
+/* Claim — firma de cierre, siempre completo y con punto final */
+.ac-claim { font-family: var(--font-body); font-style: italic; font-weight: var(--fw-regular); color: var(--ac-navy); }
+
+/* The "ruta" motif — dotted navigation path */
+.ac-route {
+  stroke: var(--ac-celeste);
+  stroke-width: 2;
+  stroke-dasharray: 2 10;
+  stroke-linecap: round;
+  fill: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
