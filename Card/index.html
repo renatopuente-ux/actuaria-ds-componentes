@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Prompt:wght@400;500&display=swap"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../bundle.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script><script src="../bundle.js"></script><meta charset="utf-8"><title>Card — preview</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" data-auto-replace-svg="nest"></script>
+<style>body{margin:0;padding:24px;background:var(--surface-page);font-family:var(--font-sans);}
+.sec{margin-bottom:28px}.sec:last-child{margin-bottom:0}
+.lbl{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ac-ink-2);margin-bottom:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.sz{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac-ink-3)}
+.tools{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;text-transform:none;letter-spacing:0}
+.cnt{font-size:12px;font-weight:700;color:var(--ac-ink-3)}
+</style>
+<style>@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)!important}}</style></head>
+<body><div id="ds-nav" style="position:sticky;top:0;z-index:50;display:flex;gap:14px;align-items:center;padding:10px 24px;background:#151f47;color:#fff;font:700 13px Nunito,sans-serif"><a href="../" style="color:#fff;text-decoration:none">&larr; Actuaria Design System</a><span style="opacity:.6">/</span><span>Card</span></div>
+<div id="root"></div>
+<script>
+var A = window.ActuariaDesignSystem_88aa6b, h = React.createElement;
+
+function Sec(p){ return h('div',{className:'sec'}, h('div',{className:'lbl'}, p.title, p.tools), p.children); }
+function Tools(p){ return h('span',{className:'tools'},
+  h(A.Button,{size:'sm',variant:'secondary',icon:'fa-solid fa-plus',onClick:p.onAdd,disabled:!!p.max&&p.n>=p.max},p.add),
+  h(A.Button,{size:'sm',variant:'ghost',icon:'fa-solid fa-minus',onClick:p.onRemove,disabled:p.n<=(p.min||0)},'Quitar'),
+  h('span',{className:'cnt'},p.n+' '+p.noun)); }
+function Sz(p){ return h('div',{className:'col',style:p.style},h('span',{className:'sz'},p.n),p.children); }
+
+
+var STUDIES=[['Jubilación patronal','2024','success'],['Desahucio','2024','success'],['NIIF 19','2023','blue'],['Provisión de vacaciones','2024','warning'],['Partícipes activos','2024','neutral'],['Cálculo de reservas','2023','success'],['Hipótesis demográficas','2024','warning'],['Tablas de mortalidad','2022','neutral'],['Impuesto diferido','2024','blue'],['Revisión de nómina','2024','error']];
+var W={sm:230,md:290,lg:350}, FS={sm:12,md:14,lg:16};
+function clamp(n,a,b){ return Math.max(a,Math.min(b,n)); }
+function Demo(){ var st=React.useState(4), n=st[0], setN=st[1], rows=[];
+  for(var i=0;i<n;i++){ var r=STUDIES[i%STUDIES.length];
+    rows.push(h('div',{key:i,style:{display:'flex',alignItems:'center',gap:12,padding:'12px 20px',borderTop:i?'1px solid var(--ac-line)':'none'}},
+      h('span',{style:{flex:1,fontSize:14,fontWeight:700,color:'var(--ac-navy)'}},r[0]+(i>=STUDIES.length?' '+(Math.floor(i/STUDIES.length)+1):'')),
+      h(A.Badge,{size:'sm',tone:'neutral'},r[1]),
+      h(A.Badge,{size:'sm',tone:r[2],dot:true},r[2]==='success'?'Al día':r[2]==='warning'?'Pendiente':r[2]==='error'?'Vencido':r[2]==='blue'?'En curso':'Archivado'))); }
+  return h('div',null,
+    h(Sec,{title:'Tamaños'},h('div',{className:'row'},
+      ['sm','md','lg'].map(function(s){ return h(Sz,{key:s,n:s,style:{width:W[s]}},
+        h(A.Card,{size:s,title:'Estudio actuarial',icon:'fa-solid fa-calculator',action:h(A.Badge,{size:s==='lg'?'md':'sm',tone:'blue'},'2024'),style:{width:'100%'}},
+          h('p',{style:{margin:'0 0 14px',color:'var(--ac-ink-2)',fontSize:FS[s],lineHeight:1.5}},'Reservas de jubilación patronal y desahucio bajo NIIF, con proyección a 10 años.'),
+          h(A.Button,{variant:'primary',size:s,icon:'fa-solid fa-arrow-right',iconRight:true},'Ver proyecciones'))); }))),
+    h(Sec,{title:'Lista dentro de la tarjeta',tools:h(Tools,{n:n,min:0,max:30,noun:'estudios',add:'Agregar estudio',onAdd:function(){setN(clamp(n+1,0,30));},onRemove:function(){setN(clamp(n-1,0,30));}})},
+      h(A.Card,{title:'Estudios del periodo',icon:'fa-solid fa-list-check',action:h(A.Badge,{tone:'blue'},n+' estudios'),padding:0,style:{maxWidth:480}},
+        n?rows:h('div',{style:{padding:'18px 20px',fontSize:14,color:'var(--ac-ink-3)'}},'Sin estudios en este periodo.')))); }
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>
