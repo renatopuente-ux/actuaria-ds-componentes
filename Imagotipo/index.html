@@ -1,0 +1,27 @@
+<!doctype html><html lang="es" data-theme="light"><head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Prompt:wght@400;500&display=swap"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../bundle.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script><script src="../bundle.js"></script><meta charset="utf-8"><title>Imagotipo ®</title>
+<style>
+  body{margin:0;padding:0;background:var(--surface-card);font-family:var(--font-heading);}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);}
+  .tile{min-height:200px;display:flex;align-items:center;justify-content:center;position:relative;border-right:1px solid var(--ac-line);}
+  .tile:last-child{border-right:none;}
+  .tile img{width:132px;height:auto;}
+  .tl{position:absolute;top:12px;left:14px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-body);}
+  .dark{background:var(--ac-navy);}
+  .dark .tl{color:var(--text-on-dark-muted);}
+  .sizes{display:flex;align-items:flex-end;gap:48px;flex-wrap:wrap;padding:28px 24px 30px;border-top:1px solid var(--ac-line);}
+  .sizes figure{margin:0;display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:100%;}
+  .sizes figcaption{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ac-ink-3);}
+  .sizes img{height:auto;display:block;max-width:100%;}
+</style><style>@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)!important}}</style></head><body><div id="ds-nav" style="position:sticky;top:0;z-index:50;display:flex;gap:14px;align-items:center;padding:10px 24px;background:#151f47;color:#fff;font:700 13px Nunito,sans-serif"><a href="../" style="color:#fff;text-decoration:none">&larr; Actuaria Design System</a><span style="opacity:.6">/</span><span>Imagotipo</span></div>
+  <div class="grid">
+    <div class="tile"><span class="tl">Color</span><img src="../assets/imagotipo.svg" alt="Actuaria"></div>
+    <div class="tile dark"><span class="tl">Alternativo</span><img src="../assets/imagotipo-alternativo.svg" alt="Actuaria"></div>
+    <div class="tile dark"><span class="tl">Negativo</span><img src="../assets/imagotipo-white.svg" alt="Actuaria"></div>
+    <div class="tile"><span class="tl">Una tinta</span><img src="../assets/imagotipo-una-tinta.svg" alt="Actuaria"></div>
+  </div>
+  <div class="sizes">
+    <figure><img src="../assets/imagotipo.svg" alt="Actuaria" style="width:180px"><figcaption>Mínimo digital · 180 px</figcaption></figure>
+    <figure><img src="../assets/imagotipo.svg" alt="Actuaria" style="width:260px"><figcaption>Estándar · 260 px</figcaption></figure>
+    <figure><img src="../assets/imagotipo.svg" alt="Actuaria" style="width:360px"><figcaption>Grande · 360 px</figcaption></figure>
+  </div>
+</body></html>
