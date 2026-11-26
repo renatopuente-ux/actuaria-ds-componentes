@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Prompt:wght@400;500&display=swap"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../bundle.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script><script src="../bundle.js"></script><meta charset="utf-8"><title>Alert — preview</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" data-auto-replace-svg="nest"></script>
+<style>body{margin:0;padding:24px;background:var(--surface-card);font-family:var(--font-sans);}
+.sec{margin-bottom:28px}.sec:last-child{margin-bottom:0}
+.lbl{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ac-ink-2);margin-bottom:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.sz{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac-ink-3)}
+.tools{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;text-transform:none;letter-spacing:0}
+.cnt{font-size:12px;font-weight:700;color:var(--ac-ink-3)}
+</style>
+<style>@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)!important}}</style></head>
+<body><div id="ds-nav" style="position:sticky;top:0;z-index:50;display:flex;gap:14px;align-items:center;padding:10px 24px;background:#151f47;color:#fff;font:700 13px Nunito,sans-serif"><a href="../" style="color:#fff;text-decoration:none">&larr; Actuaria Design System</a><span style="opacity:.6">/</span><span>Alert</span></div>
+<div id="root"></div>
+<script>
+var A = window.ActuariaDesignSystem_88aa6b, h = React.createElement;
+
+function Sec(p){ return h('div',{className:'sec'}, h('div',{className:'lbl'}, p.title, p.tools), p.children); }
+function Tools(p){ return h('span',{className:'tools'},
+  h(A.Button,{size:'sm',variant:'secondary',icon:'fa-solid fa-plus',onClick:p.onAdd,disabled:!!p.max&&p.n>=p.max},p.add),
+  h(A.Button,{size:'sm',variant:'ghost',icon:'fa-solid fa-minus',onClick:p.onRemove,disabled:p.n<=(p.min||0)},'Quitar'),
+  h('span',{className:'cnt'},p.n+' '+p.noun)); }
+function Sz(p){ return h('div',{className:'col',style:p.style},h('span',{className:'sz'},p.n),p.children); }
+
+
+var MSGS=[{tone:'success',title:'Provisión actualizada',body:'El cálculo de reservas se guardó correctamente.'},{tone:'warning',title:'Datos incompletos',body:'Faltan 3 campos obligatorios en la nómina cargada.'},{tone:'error',title:'Sin conexión',body:'No se pudo conectar con el servidor. Reintenta en unos segundos.'},{tone:'info',title:'Periodo cerrado',body:'El periodo de cálculo se cerró el 31 de diciembre de 2024.'}];
+var nextId=3;
+function Demo(){ var st=React.useState([{id:1,m:0},{id:2,m:1}]), items=st[0], setItems=st[1];
+  function add(){ if(items.length>=12) return; var id=nextId++; setItems(items.concat([{id:id,m:id%MSGS.length}])); }
+  function removeLast(){ setItems(items.slice(0,-1)); }
+  function close(id){ setItems(items.filter(function(x){return x.id!==id;})); }
+  return h('div',{style:{maxWidth:620}},
+    h(Sec,{title:'Tamaños'},h('div',{style:{display:'flex',flexDirection:'column',gap:14}},
+      h(Sz,{n:'sm'},h(A.Alert,{size:'sm',tone:'success',title:'Guardado',style:{width:'100%'}},'Los cambios se aplicaron.')),
+      h(Sz,{n:'md'},h(A.Alert,{size:'md',tone:'warning',title:'Datos incompletos',style:{width:'100%'}},'Faltan 3 campos obligatorios en la nómina cargada.')),
+      h(Sz,{n:'lg'},h(A.Alert,{size:'lg',tone:'error',title:'No se pudo conectar',onClose:function(){},style:{width:'100%'}},'El servidor no responde. Reintenta en unos segundos o contacta a soporte.')))),
+    h(Sec,{title:'Pila de avisos',tools:h(Tools,{n:items.length,min:0,max:12,noun:'avisos',add:'Agregar aviso',onAdd:add,onRemove:removeLast})},
+      h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+        items.length?items.map(function(it){ var m=MSGS[it.m]; return h(A.Alert,{key:it.id,tone:m.tone,title:m.title,onClose:function(){close(it.id);}},m.body); }):h('span',{style:{fontSize:13,color:'var(--ac-ink-3)'}},'Sin avisos.')))); }
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>
