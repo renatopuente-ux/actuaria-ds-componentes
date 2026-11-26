@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Prompt:wght@400;500&display=swap"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../bundle.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script><script src="../bundle.js"></script><meta charset="utf-8"><title>KpiCard — preview</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" data-auto-replace-svg="nest"></script>
+<style>body{margin:0;padding:24px;background:var(--surface-page);font-family:var(--font-sans);}
+.sec{margin-bottom:28px}.sec:last-child{margin-bottom:0}
+.lbl{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ac-ink-2);margin-bottom:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.sz{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac-ink-3)}
+.tools{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;text-transform:none;letter-spacing:0}
+.cnt{font-size:12px;font-weight:700;color:var(--ac-ink-3)}
+</style>
+<style>@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)!important}}</style></head>
+<body><div id="ds-nav" style="position:sticky;top:0;z-index:50;display:flex;gap:14px;align-items:center;padding:10px 24px;background:#151f47;color:#fff;font:700 13px Nunito,sans-serif"><a href="../" style="color:#fff;text-decoration:none">&larr; Actuaria Design System</a><span style="opacity:.6">/</span><span>KpiCard</span></div>
+<div id="root"></div>
+<script>
+var A = window.ActuariaDesignSystem_88aa6b, h = React.createElement;
+
+function Sec(p){ return h('div',{className:'sec'}, h('div',{className:'lbl'}, p.title, p.tools), p.children); }
+function Tools(p){ return h('span',{className:'tools'},
+  h(A.Button,{size:'sm',variant:'secondary',icon:'fa-solid fa-plus',onClick:p.onAdd,disabled:!!p.max&&p.n>=p.max},p.add),
+  h(A.Button,{size:'sm',variant:'ghost',icon:'fa-solid fa-minus',onClick:p.onRemove,disabled:p.n<=(p.min||0)},'Quitar'),
+  h('span',{className:'cnt'},p.n+' '+p.noun)); }
+function Sz(p){ return h('div',{className:'col',style:p.style},h('span',{className:'sz'},p.n),p.children); }
+
+
+var ROWS=[['Jubilación Patronal','$7M'],['Desahucio','$2M'],['Vacaciones','$640K'],['Bonificaciones','$310K'],['Fondo de reserva','$180K'],['Otros','$95K']];
+var KPIS=[['Partícipes','1,297','fa-solid fa-users','+2%','up'],['Antigüedad media','11.4 años','fa-solid fa-hourglass-half','-0.3','down'],['Reserva JP','$7M','fa-solid fa-building-columns','+4%','up'],['Desahucio','$2M','fa-solid fa-umbrella','+1%','up'],['Rotación','6.1%','fa-solid fa-arrows-rotate','-1.2 pp','down'],['Cobertura','102%','fa-solid fa-shield-halved','+3 pp','up']];
+var W={sm:220,md:280,lg:360};
+function clamp(n,a,b){ return Math.max(a,Math.min(b,n)); }
+function Demo(){ var sr=React.useState(2), nr=sr[0], setNr=sr[1], sk=React.useState(3), nk=sk[0], setNk=sk[1], rows=[], kp=[];
+  for(var i=0;i<nr;i++){ var r=ROWS[i%ROWS.length]; rows.push({label:r[0]+(i>=ROWS.length?' '+(Math.floor(i/ROWS.length)+1):''),value:r[1]}); }
+  for(var j=0;j<nk;j++){ var k=KPIS[j%KPIS.length]; kp.push(h(A.KpiCard,{key:j,size:'sm',title:k[0],icon:k[2],value:k[1],trend:k[3],trendDir:k[4]})); }
+  return h('div',null,
+    h(Sec,{title:'Tamaños'},h('div',{className:'row'},
+      ['sm','md','lg'].map(function(s){ return h(Sz,{key:s,n:s,style:{width:W[s]}},
+        h(A.KpiCard,{size:s,title:'Provisión acumulada',icon:'fa-solid fa-building-columns',value:'$9M',unit:'USD · Total acumulado',trend:'+4% vs 2023',trendDir:'up',rows:ROWS.slice(0,2).map(function(r){return {label:r[0],value:r[1]};}),style:{width:'100%'}})); }))),
+    h(Sec,{title:'Desglose de la tarjeta',tools:h(Tools,{n:nr,min:0,max:12,noun:'filas',add:'Agregar fila',onAdd:function(){setNr(clamp(nr+1,0,12));},onRemove:function(){setNr(clamp(nr-1,0,12));}})},
+      h(A.KpiCard,{title:'Provisión acumulada',icon:'fa-solid fa-building-columns',value:'$9M',unit:'USD · Total acumulado',trend:'+4% vs 2023',trendDir:'up',rows:rows,style:{maxWidth:320}})),
+    h(Sec,{title:'Tablero de indicadores',tools:h(Tools,{n:nk,min:1,max:12,noun:'indicadores',add:'Agregar indicador',onAdd:function(){setNk(clamp(nk+1,1,12));},onRemove:function(){setNk(clamp(nk-1,1,12));}})},
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(190px,1fr))',gap:14}},kp))); }
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>
